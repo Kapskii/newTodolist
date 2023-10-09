@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('https://img.goodfon.ru/original/1920x1280/e/8a/vestrahorn-vestrakhorn-islandiia-iceland-tuchi-pliazh-bereg.jpg');
+  background-size: cover;
+  color: black;
 }
 
 code {
