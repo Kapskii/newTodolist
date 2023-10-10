@@ -1,5 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 import { FilterType } from "./App"
+import { SuperButton } from "./components/SuperButton"
 
 export type TasksType = {
     id: string
@@ -56,7 +57,7 @@ export let Todolist = (props: PropsType) => {
                     onKeyDown={onKeyDownHandler}
                     className={error ? "error" : ""}
                 />
-                <button onClick={onClickHandler}>+</button>
+                <SuperButton name="+" callBack={onClickHandler}/>
                 {error && <div className="error-message">{error}</div>}
             </div>
             <ul>
@@ -69,7 +70,7 @@ export let Todolist = (props: PropsType) => {
                         }
 
                         return <li key={el.id} className={el.isDone?"is-done":""}>
-                            <button onClick={removeTaskHandler}>X</button>
+                            <SuperButton name="X" callBack={removeTaskHandler}/>
                             <input type="checkbox" 
                             onChange={onChangeHandlerInput}
                             checked={el.isDone} />
@@ -80,9 +81,12 @@ export let Todolist = (props: PropsType) => {
                 }
             </ul>
             <div>
-                <button className={props.filter==='ALL'?"active-filter":''} onClick={allClickHandler}>ALL</button>
+                <SuperButton name="ALL" callBack={allClickHandler}/>
+                <SuperButton name="ACTIVE" callBack={activeClickHandler}/>
+                <SuperButton name="COMPLETED" callBack={completedClickHandler}/>
+                {/* <button className={props.filter==='ALL'?"active-filter":''} onClick={allClickHandler}>ALL</button>
                 <button className={props.filter==='ACTIVE'?"active-filter":''} onClick={activeClickHandler}>ACTIVE</button>
-                <button className={props.filter==='COMPLETED'?"active-filter":''} onClick={completedClickHandler}>COMPLETED</button>
+                <button className={props.filter==='COMPLETED'?"active-filter":''} onClick={completedClickHandler}>COMPLETED</button> */}
             </div>
         </div>
     )
