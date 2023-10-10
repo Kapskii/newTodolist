@@ -1,12 +1,17 @@
-import React from "react"
+import React, { ReactNode } from "react"
+
 
 type PropsType = {
     name?: string
-    callBack: ()=>void
+    callBack: () => void
+    children?: ReactNode
 }
 
-export let SuperButton = (props:PropsType) => {
-    return(
-        <button onClick={props.callBack}>{props.name}</button>
+
+
+export let SuperButton: React.FC<PropsType> = (props) => {
+    const { name, callBack, children,...otherProps } = props
+    return (
+        <button onClick={callBack}>{name}</button>
     )
 }

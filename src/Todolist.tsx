@@ -14,7 +14,7 @@ type PropsType = {
     removeTask: (id: string) => void
     filterTasks: (value: FilterType) => void
     addTask: (title: string) => void
-    changeStatus: (taskId: string, isDone: boolean)=>void
+    changeStatus: (taskId: string, isDone: boolean) => void
     filter: FilterType
 }
 
@@ -30,9 +30,9 @@ export let Todolist = (props: PropsType) => {
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null)
         if (e.key === 'Enter') {
-            props.addTask(newTitle);
+            props.addTask(newTitle.trim());
             setNewTitle('');
-        }
+        } 
     }
 
     const onClickHandler = () => {
@@ -57,7 +57,7 @@ export let Todolist = (props: PropsType) => {
                     onKeyDown={onKeyDownHandler}
                     className={error ? "error" : ""}
                 />
-                <SuperButton name="+" callBack={onClickHandler}/>
+                <SuperButton name="+" callBack={onClickHandler} />
                 {error && <div className="error-message">{error}</div>}
             </div>
             <ul>
@@ -65,15 +65,15 @@ export let Todolist = (props: PropsType) => {
                     props.tasks.map(el => {
 
                         const removeTaskHandler = () => { props.removeTask(el.id) };
-                        const onChangeHandlerInput=(e:ChangeEvent<HTMLInputElement>)=>{
+                        const onChangeHandlerInput = (e: ChangeEvent<HTMLInputElement>) => {
                             props.changeStatus(el.id, e.currentTarget.checked)
                         }
 
-                        return <li key={el.id} className={el.isDone?"is-done":""}>
-                            <SuperButton name="X" callBack={removeTaskHandler}/>
-                            <input type="checkbox" 
-                            onChange={onChangeHandlerInput}
-                            checked={el.isDone} />
+                        return <li key={el.id} className={el.isDone ? "is-done" : ""}>
+                            <SuperButton name="X" callBack={removeTaskHandler} />
+                            <input type="checkbox"
+                                onChange={onChangeHandlerInput}
+                                checked={el.isDone} />
                             <span>{el.title}</span>
                         </li>
                     }
@@ -81,9 +81,9 @@ export let Todolist = (props: PropsType) => {
                 }
             </ul>
             <div>
-                <SuperButton name="ALL" callBack={allClickHandler}/>
-                <SuperButton name="ACTIVE" callBack={activeClickHandler}/>
-                <SuperButton name="COMPLETED" callBack={completedClickHandler}/>
+                <SuperButton name="ALL" callBack={allClickHandler} />
+                <SuperButton name="ACTIVE" callBack={activeClickHandler} />
+                <SuperButton name="COMPLETED" callBack={completedClickHandler} />
                 {/* <button className={props.filter==='ALL'?"active-filter":''} onClick={allClickHandler}>ALL</button>
                 <button className={props.filter==='ACTIVE'?"active-filter":''} onClick={activeClickHandler}>ACTIVE</button>
                 <button className={props.filter==='COMPLETED'?"active-filter":''} onClick={completedClickHandler}>COMPLETED</button> */}

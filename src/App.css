@@ -16,10 +16,6 @@
   color: red;
 }
 
-.active-filter {
-  background-color: rgb(172, 172, 208);
-}
-
 .is-done {
-  opacity: 0.5;
+  opacity: 0.7;
 }
