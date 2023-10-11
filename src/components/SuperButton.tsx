@@ -1,7 +1,8 @@
+import { Button, ButtonProps, IconButton } from "@mui/material"
 import React, { ReactNode } from "react"
 
 
-type PropsType = {
+type PropsType = ButtonProps & {
     name?: string
     callBack: () => void
     children?: ReactNode
@@ -10,8 +11,15 @@ type PropsType = {
 
 
 export let SuperButton: React.FC<PropsType> = (props) => {
-    const { name, callBack, children,...otherProps } = props
+    const { name, callBack, variant, children, ...otherProps } = props
     return (
-        <button onClick={callBack}>{name}</button>
+        <Button onClick={callBack}
+            variant = {variant ? variant : 'contained'}
+            // color={'primary'}
+            size={'small'}
+            {...otherProps}>
+             
+            {name}
+        </Button>
     )
 }

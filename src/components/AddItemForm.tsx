@@ -1,5 +1,7 @@
 import React, { KeyboardEvent, ChangeEvent, useState } from "react";
 import { SuperButton } from "./SuperButton";
+import { IconButton, TextField } from "@mui/material";
+import { AddCircle } from "@mui/icons-material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -32,13 +34,17 @@ export let AddItemForm = (props: AddItemFormPropsType) => {
 
     return (
         <div>
-            <input value={newTitle}
+            <TextField value={newTitle}
+            label={'Type value'}
                 onChange={onChangeHandler}
                 onKeyDown={onKeyDownHandler}
-                className={error ? "error" : ""}
+                error={!!error}
+                helperText={error}
             />
-            <SuperButton name="+" callBack={addTask} />
-            {error && <div className="error-message">{error}</div>}
+            <IconButton  onClick={addTask}> 
+            <AddCircle/>
+            </IconButton>
+            
         </div>
     )
 }

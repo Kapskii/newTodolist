@@ -3,6 +3,8 @@ import { FilterType } from "./App"
 import { SuperButton } from "./components/SuperButton"
 import { AddItemForm } from "./components/AddItemForm"
 import { EditableSpan } from "./components/EditableSpan"
+import { Checkbox, IconButton } from "@mui/material"
+import { CheckBox, Delete } from "@mui/icons-material"
 
 
 export type TasksType = {
@@ -37,19 +39,26 @@ export let Todolist = (props: PropsType) => {
         props.removeTodolist(props.id);
     }
 
-    const changeTodolistTitle = (newTitle:string) => {
+    const changeTodolistTitle = (newTitle: string) => {
         props.changeTodolistTitle(props.id, newTitle);
     }
 
 
 
-    const addTask = (title:string) => {
+    const addTask = (title: string) => {
         props.addTask(title, props.id)
+    }
+
+    const getButtonColor = (filterValue: string) => {
+       return props.filter === filterValue ? "secondary" : 'primary'
     }
 
     return (
         <div>
-            <h3><SuperButton name="X" callBack={removeTodolist}/><EditableSpan title={props.title} onChange={changeTodolistTitle}/></h3>
+            <h3><IconButton onClick={removeTodolist} size="small">
+                <Delete />
+            </IconButton><EditableSpan title={props.title} onChange={changeTodolistTitle} /></h3>
+
             <AddItemForm addItem={addTask} />
             <ul>
                 {
@@ -59,26 +68,26 @@ export let Todolist = (props: PropsType) => {
                         const onChangeHandlerInput = (e: ChangeEvent<HTMLInputElement>) => {
                             props.changeStatus(el.id, e.currentTarget.checked, props.id)
                         }
-                        
+
                         const onChangeTitleHandler = (newValue: string) => {
                             props.changeTitle(el.id, newValue, props.id)
                         }
 
                         return <li key={el.id} className={el.isDone ? "is-done" : ""}>
-                            <SuperButton name="X" callBack={removeTaskHandler} />
-                            <input type="checkbox"
-                                onChange={onChangeHandlerInput}
-                                checked={el.isDone} />
-                            <EditableSpan title={el.title} onChange={onChangeTitleHandler}/>
+                            <IconButton onClick={removeTaskHandler} size="small">
+                                <Delete />
+                            </IconButton>
+                            <Checkbox onChange={onChangeHandlerInput} checked={el.isDone} />
+                            <EditableSpan title={el.title} onChange={onChangeTitleHandler} />
                         </li>
                     }
                     )
                 }
             </ul>
             <div>
-                <SuperButton name="ALL" callBack={allClickHandler} />
-                <SuperButton name="ACTIVE" callBack={activeClickHandler} />
-                <SuperButton name="COMPLETED" callBack={completedClickHandler} />
+                <SuperButton name="ALL" callBack={allClickHandler} color={getButtonColor('ALL')}/>
+                <SuperButton name="ACTIVE" callBack={activeClickHandler} color={getButtonColor('ACTIVE')}/>
+                <SuperButton name="COMPLETED" callBack={completedClickHandler} color={getButtonColor('COMPLETED')} />
                 {/* <button className={props.filter==='ALL'?"active-filter":''} onClick={allClickHandler}>ALL</button>
                 <button className={props.filter==='ACTIVE'?"active-filter":''} onClick={activeClickHandler}>ACTIVE</button>
                 <button className={props.filter==='COMPLETED'?"active-filter":''} onClick={completedClickHandler}>COMPLETED</button> */}
