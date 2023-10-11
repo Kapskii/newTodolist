@@ -3,12 +3,18 @@ import logo from './logo.svg';
 import './App.css';
 import { TasksType, Todolist } from './Todolist';
 import { v1 } from 'uuid';
+import { AddItemForm } from './components/AddItemForm';
+import { title } from 'process';
 
 export type FilterType = 'ALL' | 'COMPLETED' | 'ACTIVE'
 type TodolistType = {
   id: string
   title: string
   filter: FilterType
+}
+
+type TaskTypeState = {
+  [key: string]: Array<TasksType>
 }
 
 
@@ -52,8 +58,16 @@ function App() {
     if (task1) {
       task1.isDone = isDone;
       setTasks({...tasks})
-    }
-    
+    } 
+  }
+
+  let changeTaskTitle = (taskId: string, newTitle: string, todolistId: string) => {
+    let task = tasks[todolistId];
+    let task1 = task.find(el => el.id === taskId);
+    if (task1) {
+      task1.title = newTitle;
+      setTasks({...tasks})
+    } 
   }
 
   let todolist1 = v1();
@@ -71,8 +85,16 @@ const removeTodolist = (todolistId:string) => {
   setTasks({...tasks})
 }
 
+const changeTodolistTitle = (todolistId: string, newTitle: string ) => {
+ const todolist = todolists.find(el => el.id === todolistId)
+ if (todolist) {
+  todolist.title = newTitle;
+  setTodolists([...todolists])
+ }
+}
 
-  let [tasks, setTasks] = useState({
+
+  let [tasks, setTasks] = useState<TaskTypeState>({
       [todolist1] : [
         { id: v1(), title: "CSS", isDone: true },
         { id: v1(), title: "JS", isDone: true },
@@ -86,11 +108,23 @@ const removeTodolist = (todolistId:string) => {
       ]
   })
 
+const addTodolist = (title:string)=>{
+  let todolist: TodolistType = {
+    id: v1(),
+     filter: 'ALL',
+     title: title
+
+  }
+setTodolists([todolist,...todolists]);
+setTasks({...tasks, [todolist.id]: []})
+}
+
   return (
+
     <div className="App">
+      <AddItemForm addItem={addTodolist}/>
       {
         todolists.map(tl => {
-
           let taskForList = tasks[tl.id];
           if (tl.filter === 'COMPLETED') {
             taskForList = taskForList.filter(el => el.isDone === true);
@@ -110,6 +144,8 @@ const removeTodolist = (todolistId:string) => {
             addTask={addTask}
             changeStatus={changeStatus} 
             removeTodolist={removeTodolist}
+            changeTodolistTitle={changeTodolistTitle}
+            changeTitle={changeTaskTitle}
             filter={tl.filter}/>
           )
         })
