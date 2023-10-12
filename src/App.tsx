@@ -22,15 +22,6 @@ type TaskTypeState = {
 
 function App() {
 
-
-  // const removeTask = (id: string, todolistId: string) => {
-  //   let task = tasks[todolistId];
-  //   let filteredTasks = task.filter(el => el.id !== id)
-  //   tasks[todolistId] = filteredTasks;
-  //   setTasks({ ...tasks });
-  // }
-
-
   const removeTask = (id: string, todolistId: string) => {
     setTasks({ ...tasks,[todolistId]:tasks[todolistId].filter(el => el.id !== id)});
   }
