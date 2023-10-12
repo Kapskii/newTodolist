@@ -4,7 +4,6 @@ import './App.css';
 import { TasksType, Todolist } from './Todolist';
 import { v1 } from 'uuid';
 import { AddItemForm } from './components/AddItemForm';
-import { title } from 'process';
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from '@mui/material';
 import { Menu } from '@mui/icons-material';
 
@@ -24,15 +23,12 @@ type TaskTypeState = {
 function App() {
 
 
-
   const removeTask = (id: string, todolistId: string) => {
     let task = tasks[todolistId];
     let filteredTasks = task.filter(el => el.id !== id)
     tasks[todolistId] = filteredTasks;
     setTasks({ ...tasks });
   }
-
-
 
 
   const filterTasks = (value: FilterType, todolistId: string) => {
@@ -45,23 +41,15 @@ function App() {
 
 
   let addTask = (title: string, todolistId: string) => {
-    let newTask = { id: v1(), title: title, isDone: false }
-    let task = tasks[todolistId];
-    let newTasks = [newTask, ...task];
-    tasks[todolistId] = newTasks;
-    setTasks({ ...tasks });
+    let newTask = { id: v1(), title: title, isDone: false}
+    setTasks({ ...tasks, [todolistId]: [newTask, ...tasks[todolistId]] });
   }
-
 
 
   let changeStatus = (taskId: string, isDone: boolean, todolistId: string) => {
-    let task = tasks[todolistId];
-    let task1 = task.find(el => el.id === taskId);
-    if (task1) {
-      task1.isDone = isDone;
-      setTasks({ ...tasks })
-    }
+      setTasks({ ...tasks, [todolistId]:tasks[todolistId].map(el=>el.id === taskId ? {...el, isDone} : el )})
   }
+
 
   let changeTaskTitle = (taskId: string, newTitle: string, todolistId: string) => {
     let task = tasks[todolistId];
@@ -72,6 +60,7 @@ function App() {
     }
   }
 
+
   let todolist1 = v1();
   let todolist2 = v1();
 
@@ -81,10 +70,8 @@ function App() {
   ])
 
   const removeTodolist = (todolistId: string) => {
-    let filteredTodolist = todolists.filter(td => td.id !== todolistId)
-    setTodolists(filteredTodolist);
+    setTodolists(todolists.filter(td => td.id !== todolistId));
     delete tasks[todolistId]
-    setTasks({ ...tasks })
   }
 
   const changeTodolistTitle = (todolistId: string, newTitle: string) => {
@@ -124,7 +111,7 @@ function App() {
   return (
 
     <div className="App">
-      <AppBar position="static" color="secondary">
+      <AppBar position="static" color="secondary" >
         <Toolbar>
           <IconButton
             size="large"
