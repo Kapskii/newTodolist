@@ -21,7 +21,6 @@ type TaskTypeState = {
 
 
 function App() {
-
   const removeTask = (id: string, todolistId: string) => {
     setTasks({ ...tasks,[todolistId]:tasks[todolistId].filter(el => el.id !== id)});
   }
@@ -71,11 +70,7 @@ function App() {
   }
 
   const changeTodolistTitle = (todolistId: string, newTitle: string) => {
-    const todolist = todolists.find(el => el.id === todolistId)
-    if (todolist) {
-      todolist.title = newTitle;
-      setTodolists([...todolists])
-    }
+    setTodolists(todolists.map(el=>el.id === todolistId ? {...el, title:newTitle} : el))
   }
 
 
@@ -107,7 +102,7 @@ function App() {
   return (
 
     <div className="App">
-      <AppBar position="static" color="secondary" >
+      <AppBar position="static" color="primary" >
         <Toolbar>
           <IconButton
             size="large"
