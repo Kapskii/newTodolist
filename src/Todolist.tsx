@@ -4,7 +4,7 @@ import { SuperButton } from "./components/SuperButton"
 import { AddItemForm } from "./components/AddItemForm"
 import { EditableSpan } from "./components/EditableSpan"
 import { Checkbox, IconButton } from "@mui/material"
-import { CheckBox, Delete } from "@mui/icons-material"
+import { Delete } from "@mui/icons-material"
 
 
 export type TasksType = {
@@ -42,9 +42,7 @@ export let Todolist = (props: PropsType) => {
     const changeTodolistTitle = (newTitle: string) => {
         props.changeTodolistTitle(props.id, newTitle);
     }
-
-
-
+    
     const addTask = (title: string) => {
         props.addTask(title, props.id)
     }
@@ -85,7 +83,7 @@ export let Todolist = (props: PropsType) => {
                 }
             </div>
             <div>
-                <SuperButton name="ALL" callBack={allClickHandler} color={getButtonColor('ALL')} />
+                <SuperButton  name="ALL" callBack={allClickHandler} color={getButtonColor('ALL')} />
                 <SuperButton name="ACTIVE" callBack={activeClickHandler} color={getButtonColor('ACTIVE')} />
                 <SuperButton name="COMPLETED" callBack={completedClickHandler} color={getButtonColor('COMPLETED')} />
             </div>

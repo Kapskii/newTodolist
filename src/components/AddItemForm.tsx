@@ -1,6 +1,7 @@
 import React, { KeyboardEvent, ChangeEvent, useState } from "react";
 import { SuperButton } from "./SuperButton";
-import { IconButton, TextField } from "@mui/material";
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 import { AddCircle } from "@mui/icons-material";
 
 type AddItemFormPropsType = {

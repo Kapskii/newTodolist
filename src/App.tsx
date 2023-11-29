@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { TasksType, Todolist } from './Todolist';
 import { v1 } from 'uuid';
 import { AddItemForm } from './components/AddItemForm';
-import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from '@mui/material';
+import { Container, Grid, Paper, Toolbar, Typography } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import { Menu } from '@mui/icons-material';
 
 export type FilterType = 'ALL' | 'COMPLETED' | 'ACTIVE'
-type TodolistType = {
+export type TodolistType = {
   id: string
   title: string
   filter: FilterType
@@ -102,7 +104,7 @@ function App() {
   return (
 
     <div className="App">
-      <AppBar position="static" color="primary" >
+      <AppBar style={{background: "whitesmoke", color: "black"}} position="static" >
         <Toolbar>
           <IconButton
             size="large"

@@ -14,10 +14,9 @@ export let SuperButton: React.FC<PropsType> = (props) => {
     const { name, callBack, variant, children, ...otherProps } = props
     return (
         <Button onClick={callBack}
-            variant = {variant ? variant : 'contained'}
+            variant={variant ? variant : 'contained'}
             size={'small'}
             {...otherProps}>
-             
             {name}
         </Button>
     )
