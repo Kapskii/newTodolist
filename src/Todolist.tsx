@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from "react"
+import React, { ChangeEvent } from "react"
 import { FilterType } from "./App"
 import { SuperButton } from "./components/SuperButton"
 import { AddItemForm } from "./components/AddItemForm"
@@ -27,9 +27,7 @@ type PropsType = {
     changeTitle: (taskId: string, newTitle: string, todolistId: string) => void
 }
 
-
 export let Todolist = (props: PropsType) => {
-
 
 
     const allClickHandler = () => props.filterTasks('ALL', props.id);

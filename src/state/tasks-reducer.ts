@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import { FilterType, TaskTypeState, TodolistType } from "../App";
+import { TaskTypeState } from "../App";
 import { AddTodolistActionType, RemoveTodolistActionType } from "./todolists-reducer";
 
 export type RemoveTaskActionType = {
@@ -38,8 +38,10 @@ type ActionsType =
   | AddTodolistActionType
   | RemoveTodolistActionType ;
 
+const initialState: TaskTypeState = {}
+
 export const taskReducer = (
-  state: TaskTypeState,
+  state = initialState,
   action: ActionsType
 ): TaskTypeState => {
   switch (action.type) {
@@ -47,7 +49,7 @@ export const taskReducer = (
       const stateCopy = {
         ...state,
         [action.todolistId]: [
-          ...state[action.todolistId].filter((t) => t.id != action.taskId),
+          ...state[action.todolistId].filter((t) => t.id !== action.taskId),
         ],
       };
       return stateCopy;
@@ -64,14 +66,18 @@ export const taskReducer = (
       const stateCopy = { ...state};
       const tasks = stateCopy[action.todolistId];
       const task = tasks.find(t => t.id === action.taskId);
-      task ? task.isDone = action.isDone : ''; 
+      if (task) {
+        task.isDone = action.isDone
+      }
       return stateCopy;
     }
     case "CHANGE-TASK-TITLE": {
       const stateCopy = { ...state};
       const tasks = stateCopy[action.todolistId];
       const task = tasks.find(t => t.id === action.taskId);
-      task ? task.title = action.title : ''; 
+      if (task) {
+        task.title = action.title
+      }
       return stateCopy;
     }
     case "ADD-TODOLIST": {
