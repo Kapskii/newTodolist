@@ -1,15 +1,25 @@
 import React, { ChangeEvent } from "react";
-import { FilterType, TaskTypeState, TodolistType } from "./App";
-import { SuperButton } from "./components/SuperButton";
-import { AddItemForm } from "./components/AddItemForm";
-import { EditableSpan } from "./components/EditableSpan";
+import { TodolistType } from "../AppWithRedux";
+import { SuperButton } from "./SuperButton";
+import { AddItemForm } from "./AddItemForm";
+import { EditableSpan } from "./EditableSpan";
 import { Checkbox, IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { AppRootStateType } from "./state/store";
-import {addTaskAC,changeTaskStatusAC,changeTaskTitleAC,removeTaskAC,} from "./state/tasks-reducer";
-import {ChangeTodolistFilterAC,ChangeTodolistTitleAC,RemoveTodolistAC,} from "./state/todolists-reducer";
+import { AppRootStateType } from "../state/store";
+import {
+  addTaskAC,
+  changeTaskStatusAC,
+  changeTaskTitleAC,
+  removeTaskAC,
+} from "../state/tasks-reducer";
+import {
+  ChangeTodolistFilterAC,
+  ChangeTodolistTitleAC,
+  RemoveTodolistAC,
+} from "../state/todolists-reducer";
+import s from "./TodolistWithRedux.module.css";
 
 export type TasksType = {
   id: string;
@@ -22,8 +32,6 @@ type PropsType = {
 };
 
 export let TodolistWithRedux = ({ todolist }: PropsType) => {
-
-
   const { id, title, filter } = todolist;
   let tasks = useSelector<AppRootStateType, Array<TasksType>>(
     (state) => state.tasks[id]
@@ -32,8 +40,10 @@ export let TodolistWithRedux = ({ todolist }: PropsType) => {
   const dispatch = useDispatch();
 
   const allClickHandler = () => dispatch(ChangeTodolistFilterAC(id, "ALL"));
-  const activeClickHandler = () => ChangeTodolistFilterAC(id, "ACTIVE");
-  const completedClickHandler = () => ChangeTodolistFilterAC(id, "COMPLETED");
+  const activeClickHandler = () =>
+    dispatch(ChangeTodolistFilterAC(id, "ACTIVE"));
+  const completedClickHandler = () =>
+    dispatch(ChangeTodolistFilterAC(id, "COMPLETED"));
 
   if (filter === "COMPLETED") {
     tasks = tasks.filter((el) => el.isDone === true);
@@ -58,9 +68,8 @@ export let TodolistWithRedux = ({ todolist }: PropsType) => {
     return filter === filterValue ? "secondary" : "primary";
   };
 
-
   return (
-    <div>
+    <div className={s.todoWrapper}>
       <h3>
         <IconButton onClick={removeTodolist} size="small">
           <Delete />
@@ -70,7 +79,6 @@ export let TodolistWithRedux = ({ todolist }: PropsType) => {
 
       <AddItemForm addItem={addTask} />
 
-      
       <div>
         {tasks.map((el) => {
           const removeTaskHandler = () => dispatch(removeTaskAC(el.id, id));
@@ -94,7 +102,7 @@ export let TodolistWithRedux = ({ todolist }: PropsType) => {
           );
         })}
       </div>
-      <div>
+      <div className={s.buttonWrapper}>
         <SuperButton
           name="ALL"
           callBack={allClickHandler}
